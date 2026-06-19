@@ -6,11 +6,11 @@ namespace Dsw2026Ej15.Domain.Entities
 {
     public abstract class BaseEntity
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; private set; }
 
-        protected BaseEntity(Guid? id = null) 
-        { 
-            id = id ?? Guid.NewGuid(); //Id si no es null. NewGuid si es null
+        protected BaseEntity(Guid? id = null)
+        {
+            Id = id ?? Guid.NewGuid();
         }
     }
 }
