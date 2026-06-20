@@ -8,9 +8,7 @@ using System.Linq;
 
 namespace Dsw2026Ej15.Api.Controllers
 {
-    [ApiController]
-    [Route("api/doctors")]
-    public class DoctorsController : ControllerBase
+    public class DoctorsController : AppController
     {
         private readonly IPersistence _persistence;
 
@@ -19,7 +17,7 @@ namespace Dsw2026Ej15.Api.Controllers
             _persistence = persistence;
         }
 
-        [HttpPost]
+        [HttpPost("doctors")]
         public IActionResult AddDoctor(
             [FromBody] CreateDoctorDto doctorRequest)
         {
@@ -68,7 +66,7 @@ namespace Dsw2026Ej15.Api.Controllers
             );
         }
 
-        [HttpGet]
+        [HttpGet("doctors")]
         public IActionResult GetDoctors()
         {
             List<Doctor> activeDoctors =
