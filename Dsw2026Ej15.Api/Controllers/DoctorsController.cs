@@ -1,5 +1,6 @@
 ﻿using Dsw2026Ej15.Api.Dtos;
 using Dsw2026Ej15.Domain.Entities;
+using Dsw2026Ej15.Domain.Exceptions;
 using Dsw2026Ej15.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -23,17 +24,13 @@ namespace Dsw2026Ej15.Api.Controllers
         {
             if (string.IsNullOrWhiteSpace(doctorRequest.Name))
             {
-                return BadRequest(
-                    "El Nombre del médico es obligatorio"
-                );
+                throw new ValidationException("El Nombre del médico es obligatorio");
             }
 
             if (string.IsNullOrWhiteSpace(
                 doctorRequest.LicenseNumber))
             {
-                return BadRequest(
-                    "El Número de matrícula del médico es obligatorio"
-                );
+                throw new ValidationException("El Número de matrícula del médico es obligatorio");
             }
 
             Speciality? selectedSpeciality =
@@ -43,9 +40,7 @@ namespace Dsw2026Ej15.Api.Controllers
 
             if (selectedSpeciality == null)
             {
-                return BadRequest(
-                    "La especialidad indicada no existe"
-                );
+                throw new ValidationException("La especialidad indicada no existe");
             }
 
             Doctor newDoctor = new Doctor(
@@ -81,7 +76,7 @@ namespace Dsw2026Ej15.Api.Controllers
             return Ok(doctorResponses);
         }
 
-        [HttpGet("{doctorId:guid}")]
+        [HttpGet("doctors/{id:guid}")]
         public IActionResult GetDoctorById(Guid doctorId)
         {
             Doctor? selectedDoctor =
@@ -98,7 +93,7 @@ namespace Dsw2026Ej15.Api.Controllers
             return Ok(doctorResponse);
         }
 
-        [HttpDelete("{doctorId:guid}")]
+        [HttpDelete("doctors/{id:guid}")]
         public IActionResult DeleteDoctor(Guid doctorId)
         {
             bool doctorWasDeactivated =
